@@ -26,6 +26,10 @@ module.exports = fp(async function (fastify, opts) {
       }
       
       const connection = container.connect(connectOptions)
+
+      container.on('connection_open', (context) => {
+        console.log(`Successfully connected to ${process.env.ORDER_QUEUE_HOSTNAME}`);
+      });
       
       container.once('sendable', function (context) {
         const sender = context.sender;
